@@ -1,0 +1,21 @@
+{
+  "name": "btc-forks-balance",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.17.1",
+    "base58check": "^2.0.0",
+    "bluebird": "^3.5.1",
+    "fixed-data-table": "^0.6.5",
+    "material-ui": "^0.19.4",
+    "react": "^16.1.1",
+    "react-dom": "^16.1.1",
+    "react-scripts": "1.0.17"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
