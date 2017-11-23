@@ -1,5 +1,5 @@
 import axios from 'axios';
-import base58check from 'base58check';
+import base58check from '../base58check';
 import getProxiedUrl from '../get-proxied-uri';
 
 export async function getBalance(addr) {
