@@ -1,6 +1,5 @@
 import axios from 'axios';
 import base58check from '../base58check';
-import getProxiedUrl from '../get-proxied-uri';
 
 export async function getBalance(addr) {
   const { data: { balanceSat } } = await axios.get(`https://btgexplorer.com/api/addr/${getBtgAddr(addr)}/?noTxList=1`);
