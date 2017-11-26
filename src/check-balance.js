@@ -6,13 +6,16 @@ import Promise from 'bluebird';
 import axios from 'axios';
 export default async function (addr) {
   return (await Promise.map([btc, bch, btg, btx], async currency => {
-    return Promise.all([currency, currency.getBalance(addr), checkPrice(currency)]);
-  })).map(([currency, balance, { priceBtc, priceUsd }]) => {
+    const currAddr = currency.convertAddr ? currency.convertAddr(addr) : addr;
+    return Promise.all([currency, currency.getBalance(currAddr), checkPrice(currency), currAddr]);
+  })).map(([currency, balance, { priceBtc, priceUsd }, addr]) => {
     return {
       ...currency,
       balance,
       priceBtc,
       priceUsd,
+      addr,
+      blockExplorerLink: currency.getBlockExplorerLink(addr),
     }
   });
 }

@@ -5,5 +5,9 @@ export async function getBalance(addr) {
   return data;
 }
 
+export function getBlockExplorerLink(addr) {
+  return `https://blockchair.com/bitcoin/address/${addr}`;
+}
+
 export const ticker = 'btc';
 export const cmcName = 'bitcoin';

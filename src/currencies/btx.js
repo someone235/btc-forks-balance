@@ -8,5 +8,9 @@ export async function getBalance(addr) {
   return data * 1e8;
 }
 
+export function getBlockExplorerLink(addr) {
+  return `https://chainz.cryptoid.info/btx/address.dws?${addr}.htm`;
+}
+
 export const ticker = 'btx';
 export const cmcName = 'bitcore';

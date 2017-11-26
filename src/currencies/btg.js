@@ -2,15 +2,11 @@ import axios from 'axios';
 import base58check from '../base58check';
 
 export async function getBalance(addr) {
-  const { data: { balanceSat } } = await axios.get(`https://btgexplorer.com/api/addr/${getBtgAddr(addr)}/?noTxList=1`);
+  const { data: { balanceSat } } = await axios.get(`https://btgexplorer.com/api/addr/${addr}/?noTxList=1`);
   return balanceSat;
 }
 
-export const ticker = 'btg';
-export const cmcName = 'bitcoin-gold';
-
-function getBtgAddr(add) {
-
+export function convertAddr(add) {
   var decoded = base58check.decode(add, 'hex');
   if (decoded.prefix == '00') { // 1: dec: 0 hex: 00
     console.log('Pay-to-PubkeyHash Bitcoin to Bitcoin Gold');
@@ -26,3 +22,10 @@ function getBtgAddr(add) {
     return base58check.encode(decoded.data, '00');
   }
 }
+
+export function getBlockExplorerLink(addr) {
+  return `https://btgexplorer.com/address/${addr}`;
+}
+
+export const ticker = 'btg';
+export const cmcName = 'bitcoin-gold';

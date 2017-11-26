@@ -8,5 +8,9 @@ export async function getBalance(addr) {
   return Number(sum_value_unspent);
 }
 
+export function getBlockExplorerLink(addr) {
+  return `https://blockchair.com/bitcoin-cash/address/${addr}`;
+}
+
 export const ticker = 'bch';
 export const cmcName = 'bitcoin-cash';

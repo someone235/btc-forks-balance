@@ -44,6 +44,7 @@ class App extends Component {
             <RaisedButton onClick={this.onSubmit} primary={true} label="Check" disabled={this.state.loading} />
           </div>
           {this.getBalancesTable()}
+          <div style={{ fontSize: 10 }}>Donate BTC: 1F5n1fKsNU5JZGNnHyJRnbz1azRyHnut9S or bc1q2vgfjzuraefg4uc3mpavqk234szvvvgznm27mt</div>
         </div>
       </MuiThemeProvider>
     );
@@ -56,6 +57,7 @@ class App extends Component {
           <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn>Ticker</TableHeaderColumn>
+              <TableHeaderColumn>Address</TableHeaderColumn>
               <TableHeaderColumn>Balance</TableHeaderColumn>
               <TableHeaderColumn>BTC Balance</TableHeaderColumn>
               <TableHeaderColumn>USD Balance</TableHeaderColumn>
@@ -65,6 +67,7 @@ class App extends Component {
             <TableRow>
               <TableRowColumn><b>Total</b></TableRowColumn>
               <TableRowColumn></TableRowColumn>
+              <TableRowColumn></TableRowColumn>
               <TableRowColumn><b>{totalBtc / 1e8}</b></TableRowColumn>
               <TableRowColumn><b>{totalUsd}</b></TableRowColumn>
             </TableRow>
@@ -72,6 +75,7 @@ class App extends Component {
               return (
                 <TableRow key={currency.ticker}>
                   <TableRowColumn><a href={`https://coinmarketcap.com/currencies/${currency.cmcName}/`}>{currency.ticker}</a></TableRowColumn>
+                  <TableRowColumn><a href={currency.blockExplorerLink}>{currency.addr}</a></TableRowColumn>
                   <TableRowColumn>{currency.balance / 1e8}</TableRowColumn>
                   <TableRowColumn>{currency.priceBtc * currency.balance / 1e8}</TableRowColumn>
                   <TableRowColumn>{currency.priceUsd * currency.balance / 1e8}</TableRowColumn>
