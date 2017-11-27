@@ -11,6 +11,8 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
+import WAValidator from 'wallet-address-validator';
+import { error } from 'util';
 
 
 class App extends Component {
@@ -20,14 +22,18 @@ class App extends Component {
   }
 
   onSubmit = async () => {
-    this.setState({
-      loading: true
-    })
-    const balance = await checkBalance(this.state.address);
-    this.setState({
-      balance,
-      loading: false,
-    });
+    if (WAValidator.validate(this.state.address, 'BTC')) {
+      this.setState({
+        loading: true
+      })
+      const balance = await checkBalance(this.state.address);
+      this.setState({
+        balance,
+        loading: false,
+      });
+    } else {
+      alert('Invalid BTC address');
+    }
   };
 
   render() {
@@ -73,13 +79,7 @@ class App extends Component {
             </TableRow>
             {this.state.balance.map((currency, i) => {
               return (
-                <TableRow key={currency.ticker}>
-                  <TableRowColumn><a href={`https://coinmarketcap.com/currencies/${currency.cmcName}/`}>{currency.ticker}</a></TableRowColumn>
-                  <TableRowColumn><a href={currency.blockExplorerLink}>{currency.addr}</a></TableRowColumn>
-                  <TableRowColumn>{currency.balance / 1e8}</TableRowColumn>
-                  <TableRowColumn>{currency.priceBtc * currency.balance / 1e8}</TableRowColumn>
-                  <TableRowColumn>{currency.priceUsd * currency.balance / 1e8}</TableRowColumn>
-                </TableRow>
+                <CurrencyRow currency={currency} key={currency.ticker} />
               );
             })}
           </TableBody>
@@ -88,7 +88,7 @@ class App extends Component {
     }
   }
   getTotalBtc() {
-    return this.state.balance.reduce((sum, currency) => sum + currency.balance * currency.priceBtc, 0);
+    return this.state.balance.reduce((sum, currency) => sum + (currency.balance instanceof Error ? 0 : currency.balance * currency.priceBtc), 0);
   }
   getTotal() {
     const totalBtc = this.getTotalBtc();
@@ -99,3 +99,26 @@ class App extends Component {
 }
 
 export default App;
+
+function CurrencyRow({ currency }) {
+  if (currency.balance instanceof Error) {
+    return (
+      <TableRow>
+        <TableRowColumn><a href={`https://coinmarketcap.com/currencies/${currency.cmcName}/`}>{currency.ticker}</a></TableRowColumn>
+        <TableRowColumn><a href={currency.blockExplorerLink}>{currency.addr}</a></TableRowColumn>
+        <TableRowColumn>There was an error in fetching the balance</TableRowColumn>
+        <TableRowColumn></TableRowColumn>
+        <TableRowColumn></TableRowColumn>
+      </TableRow>
+    );
+  }
+  return (
+    <TableRow>
+      <TableRowColumn><a href={`https://coinmarketcap.com/currencies/${currency.cmcName}/`}>{currency.ticker}</a></TableRowColumn>
+      <TableRowColumn><a href={currency.blockExplorerLink}>{currency.addr}</a></TableRowColumn>
+      <TableRowColumn>{currency.balance / 1e8}</TableRowColumn>
+      <TableRowColumn>{currency.priceBtc * currency.balance / 1e8}</TableRowColumn>
+      <TableRowColumn>{currency.priceUsd * currency.balance / 1e8}</TableRowColumn>
+    </TableRow>
+  );
+}

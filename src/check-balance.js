@@ -7,7 +7,7 @@ import axios from 'axios';
 export default async function (addr) {
   return (await Promise.map([btc, bch, btg, btx], async currency => {
     const currAddr = currency.convertAddr ? currency.convertAddr(addr) : addr;
-    return Promise.all([currency, currency.getBalance(currAddr), checkPrice(currency), currAddr]);
+    return Promise.all([currency, getBalance(currency, currAddr), checkPrice(currency), currAddr]);
   })).map(([currency, balance, { priceBtc, priceUsd }, addr]) => {
     return {
       ...currency,
@@ -18,6 +18,15 @@ export default async function (addr) {
       blockExplorerLink: currency.getBlockExplorerLink(addr),
     }
   });
+}
+
+async function getBalance(currency, currAddr) {
+  try {
+    return await currency.getBalance(currAddr);
+  } catch (e) {
+    console.error(e);
+    return e;
+  }
 }
 
 async function checkPrice({ cmcName }) {
