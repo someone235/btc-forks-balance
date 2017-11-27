@@ -2,8 +2,13 @@ import axios from 'axios';
 import base58check from '../base58check';
 
 export async function getBalance(addr) {
-  const { data: { balanceSat } } = await axios.get(`https://btgexplorer.com/api/addr/${addr}/?noTxList=1`);
-  return balanceSat;
+  try {
+    const { data: { balanceSat } } = await axios.get(`https://btgexplorer.com/api/addr/${addr}/?noTxList=1`);
+    return balanceSat;
+  } catch (e) {
+    const { data } = await axios.get(`https://btgexp.com/ext/getbalance/${addr}`);
+    return data * 1e8;
+  }
 }
 
 export function convertAddr(add) {
