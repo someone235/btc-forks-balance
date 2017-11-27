@@ -12,7 +12,6 @@ import {
 } from 'material-ui/Table';
 import TextField from 'material-ui/TextField';
 import WAValidator from 'wallet-address-validator';
-import { error } from 'util';
 
 
 class App extends Component {
@@ -50,7 +49,10 @@ class App extends Component {
             <RaisedButton onClick={this.onSubmit} primary={true} label="Check" disabled={this.state.loading} />
           </div>
           {this.getBalancesTable()}
-          <div style={{ fontSize: 10 }}>Donate BTC: 1F5n1fKsNU5JZGNnHyJRnbz1azRyHnut9S or bc1q2vgfjzuraefg4uc3mpavqk234szvvvgznm27mt</div>
+          <div style={{ fontSize: 10 }}>
+            <div>If you want to see a fork that is not on the list, please <a href="https://github.com/someone235/btc-forks-balance/issues/new">place an issue</a>, and I will add it ASAP.</div>
+            <div>Donate BTC: 1F5n1fKsNU5JZGNnHyJRnbz1azRyHnut9S or bc1q2vgfjzuraefg4uc3mpavqk234szvvvgznm27mt</div>
+          </div>
         </div>
       </MuiThemeProvider>
     );
