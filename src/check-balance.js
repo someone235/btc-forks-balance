@@ -4,7 +4,14 @@ import * as btg from './currencies/btg';
 import * as btx from './currencies/btx';
 import Promise from 'bluebird';
 import axios from 'axios';
-export default async function (addr) {
+import { sort, flatten } from 'ramda';
+
+export default async function (addresses) {
+  const balances = await Promise.map(addresses, getAddressBalance);
+  return sort((a, b) => a.ticker === 'btc' || a.ticker < b.ticker ? -1 : 1, flatten(balances));
+}
+
+async function getAddressBalance(addr) {
   return (await Promise.map([btc, bch, btg, btx], async currency => {
     const currAddr = currency.convertAddr ? currency.convertAddr(addr) : addr;
     return Promise.all([currency, getBalance(currency, currAddr), checkPrice(currency), currAddr]);

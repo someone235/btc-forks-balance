@@ -9,6 +9,7 @@
     "fixed-data-table": "^0.6.5",
     "gh-pages": "^1.1.0",
     "material-ui": "^0.19.4",
+    "ramda": "^0.25.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
     "react-scripts": "1.0.17",
