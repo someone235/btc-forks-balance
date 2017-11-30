@@ -14,6 +14,7 @@ import TextField from 'material-ui/TextField';
 import WAValidator from 'wallet-address-validator';
 import { flatten } from 'ramda';
 import Toggle from 'material-ui/Toggle';
+import BalanceRow from './BalanceRow';
 
 class App extends Component {
   constructor(props) {
@@ -194,58 +195,14 @@ class App extends Component {
 function getCurrencyTotal(currency) {
   return currency.balances.reduce(
     (sum, balance) =>
-      sum + (balance.value instanceof Error ? 0 : balance.value),
+      balance.value instanceof Error ? balance.value : balance.value + sum,
     0
   );
 }
 
 function getCurrencyTotalBtc(currency) {
-  return getCurrencyTotal(currency) * currency.priceBtc;
+  const currencyTotal = getCurrencyTotal(currency);
+  return currencyTotal instanceof Error ? 0 : currencyTotal * currency.priceBtc;
 }
 
 export default App;
-
-function BalanceRow({ currency, hideAddress }) {
-  if (currency.value instanceof Error) {
-    return (
-      <TableRow>
-        <TableRowColumn>
-          <a href={`https://coinmarketcap.com/currencies/${currency.cmcName}/`}>
-            {currency.ticker.toUpperCase()}
-          </a>
-        </TableRowColumn>
-        {!hideAddress && (
-          <TableRowColumn>
-            <a href={currency.blockExplorerLink}>{currency.addr}</a>
-          </TableRowColumn>
-        )}
-        <TableRowColumn>
-          There was an error in fetching the balance
-        </TableRowColumn>
-        <TableRowColumn />
-        <TableRowColumn />
-      </TableRow>
-    );
-  }
-  return (
-    <TableRow>
-      <TableRowColumn>
-        <a href={`https://coinmarketcap.com/currencies/${currency.cmcName}/`}>
-          {currency.ticker.toUpperCase()}
-        </a>
-      </TableRowColumn>
-      {!hideAddress && (
-        <TableRowColumn>
-          <a href={currency.blockExplorerLink}>{currency.addr}</a>
-        </TableRowColumn>
-      )}
-      <TableRowColumn>{currency.value / 1e8}</TableRowColumn>
-      <TableRowColumn>
-        {currency.priceBtc * currency.value / 1e8}
-      </TableRowColumn>
-      <TableRowColumn>
-        {currency.priceUsd * currency.value / 1e8}
-      </TableRowColumn>
-    </TableRow>
-  );
-}
