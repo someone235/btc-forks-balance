@@ -4,7 +4,7 @@ import * as btg from './currencies/btg';
 import * as btx from './currencies/btx';
 import Promise from 'bluebird';
 import axios from 'axios';
-import { sort, flatten } from 'ramda';
+import { sort } from 'ramda';
 
 export default async function(addresses) {
   const balances = await Promise.map([btc, bch, btg, btx], async currency => {
