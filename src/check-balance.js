@@ -19,8 +19,7 @@ export default async function(addresses) {
       priceUsd,
     };
   });
-  // const balances = await Promise.map(addresses, getAddressBalance);
-  return sort((a, b) => (a.ticker < b.ticker ? -1 : 1), flatten(balances));
+  return sort((a, b) => (a.ticker < b.ticker ? -1 : 1), balances);
 }
 
 async function getCurrencyBalances(addresses, currency) {
@@ -30,27 +29,6 @@ async function getCurrencyBalances(addresses, currency) {
       value: await getBalance(currency, currAddr),
       addr: currAddr,
       blockExplorerLink: currency.getBlockExplorerLink(currAddr),
-    };
-  });
-}
-
-async function getAddressBalance(addr) {
-  return (await Promise.map([btc, bch, btg, btx], async currency => {
-    const currAddr = currency.convertAddr ? currency.convertAddr(addr) : addr;
-    return Promise.all([
-      currency,
-      getBalance(currency, currAddr),
-      checkPrice(currency),
-      currAddr,
-    ]);
-  })).map(([currency, balance, { priceBtc, priceUsd }, addr]) => {
-    return {
-      ...currency,
-      balance,
-      priceBtc,
-      priceUsd,
-      addr,
-      blockExplorerLink: currency.getBlockExplorerLink(addr),
     };
   });
 }
