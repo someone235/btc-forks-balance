@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Table,
-  TableBody,
-  TableHeader,
-  TableHeaderColumn,
-  TableRow,
-  TableRowColumn,
-} from 'material-ui/Table';
+import { TableRow, TableRowColumn } from 'material-ui/Table';
 export default function BalanceRow({ currency, hideAddress }) {
   if (currency.value instanceof Error) {
     return (
