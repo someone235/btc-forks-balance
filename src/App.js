@@ -48,10 +48,7 @@ class App extends Component {
                   place an issue
                 </a>, and I will add it ASAP.
               </div>
-              <div>
-                Donate BTC: 1F5n1fKsNU5JZGNnHyJRnbz1azRyHnut9S or
-                bc1q2vgfjzuraefg4uc3mpavqk234szvvvgznm27mt
-              </div>
+              <div>Donate BTC: 1F5n1fKsNU5JZGNnHyJRnbz1azRyHnut9S</div>
             </div>
           </div>
         </div>
