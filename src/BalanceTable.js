@@ -10,6 +10,7 @@ import {
 import Toggle from 'material-ui/Toggle';
 import BalanceRow from './BalanceRow';
 import { flatten } from 'ramda';
+import numberToString from './number-to-string';
 
 export default class extends Component {
   constructor(props) {
@@ -49,36 +50,39 @@ export default class extends Component {
   getTable() {
     if (this.props.balance) {
       const { totalBtc, totalUsd } = this.getTotal();
+
       return (
-        <Table>
-          <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn>Ticker</TableHeaderColumn>
-              {!this.isSummarized() && (
-                <TableHeaderColumn>Address</TableHeaderColumn>
-              )}
-              <TableHeaderColumn>Balance</TableHeaderColumn>
-              <TableHeaderColumn>BTC Balance</TableHeaderColumn>
-              <TableHeaderColumn>USD Balance</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            <TableRow>
-              <TableRowColumn>
-                <b>Total</b>
-              </TableRowColumn>
-              {!this.isSummarized() && <TableRowColumn />}
-              <TableRowColumn />
-              <TableRowColumn>
-                <b>{totalBtc / 1e8}</b>
-              </TableRowColumn>
-              <TableRowColumn>
-                <b>{totalUsd}</b>
-              </TableRowColumn>
-            </TableRow>
-            {this.getBalanceRows()}
-          </TableBody>
-        </Table>
+        <div style={{ minWidth: 700 }}>
+          <Table>
+            <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
+              <TableRow>
+                <TableHeaderColumn>Ticker</TableHeaderColumn>
+                {!this.isSummarized() && (
+                  <TableHeaderColumn>Address</TableHeaderColumn>
+                )}
+                <TableHeaderColumn>Balance</TableHeaderColumn>
+                <TableHeaderColumn>BTC Balance</TableHeaderColumn>
+                <TableHeaderColumn>USD Balance</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody displayRowCheckbox={false}>
+              <TableRow>
+                <TableRowColumn>
+                  <b>Total</b>
+                </TableRowColumn>
+                {!this.isSummarized() && <TableRowColumn />}
+                <TableRowColumn />
+                <TableRowColumn>
+                  <b>{numberToString(totalBtc / 1e8)}</b>
+                </TableRowColumn>
+                <TableRowColumn>
+                  <b>{numberToString(totalUsd)}</b>
+                </TableRowColumn>
+              </TableRow>
+              {this.getBalanceRows()}
+            </TableBody>
+          </Table>
+        </div>
       );
     }
   }

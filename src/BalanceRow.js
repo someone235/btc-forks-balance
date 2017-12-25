@@ -1,5 +1,6 @@
 import React from 'react';
 import { TableRow, TableRowColumn } from 'material-ui/Table';
+import numberToString from './number-to-string';
 export default function BalanceRow({ currency, hideAddress }) {
   if (currency.value instanceof Error) {
     return (
@@ -34,12 +35,12 @@ export default function BalanceRow({ currency, hideAddress }) {
           <a href={currency.blockExplorerLink}>{currency.addr}</a>
         </TableRowColumn>
       )}
-      <TableRowColumn>{currency.value / 1e8}</TableRowColumn>
+      <TableRowColumn>{numberToString(currency.value / 1e8)}</TableRowColumn>
       <TableRowColumn>
-        {currency.priceBtc * currency.value / 1e8}
+        {numberToString(currency.priceBtc * currency.value / 1e8)}
       </TableRowColumn>
       <TableRowColumn>
-        {currency.priceUsd * currency.value / 1e8}
+        {numberToString(currency.priceUsd * currency.value / 1e8)}
       </TableRowColumn>
     </TableRow>
   );
