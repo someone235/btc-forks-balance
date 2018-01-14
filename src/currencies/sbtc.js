@@ -1,7 +1,7 @@
-import axios from 'axios';
+import getProxiedUrl from '../get-proxied-uri';
 
 export async function getBalance(addr) {
-  const { data: { balanceSat } } = await axios.get(
+  const { data: { balanceSat } } = await getProxiedUrl(
     `http://block.superbtc.org/insight-api/addr/${addr}/?noTxList=1`
   );
   return balanceSat;
