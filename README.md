@@ -5,6 +5,7 @@ A tool to get all BTC forks balances related to a given address.
 * Bitcoin Cash/BCH
 * Bitcoin Gold/BTG
 * Bitcore/BTX
+* Super Bitcoin/SBTC
 
 If you want to see a fork that is not on the list, please
 [place an issue](https://github.com/someone235/btc-forks-balance/issues/new),

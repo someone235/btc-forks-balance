@@ -2,23 +2,27 @@ import * as btc from './currencies/btc';
 import * as bch from './currencies/bch';
 import * as btg from './currencies/btg';
 import * as btx from './currencies/btx';
+import * as sbtc from './currencies/sbtc';
 import Promise from 'bluebird';
 import axios from 'axios';
 import { sort } from 'ramda';
 
 export default async function(addresses) {
-  const balances = await Promise.map([btc, bch, btg, btx], async currency => {
-    const [balances, { priceBtc, priceUsd }] = await Promise.all([
-      getCurrencyBalances(addresses, currency),
-      checkPrice(currency),
-    ]);
-    return {
-      ...currency,
-      balances,
-      priceBtc,
-      priceUsd,
-    };
-  });
+  const balances = await Promise.map(
+    [btc, bch, btg, btx, sbtc],
+    async currency => {
+      const [balances, { priceBtc, priceUsd }] = await Promise.all([
+        getCurrencyBalances(addresses, currency),
+        checkPrice(currency),
+      ]);
+      return {
+        ...currency,
+        balances,
+        priceBtc,
+        priceUsd,
+      };
+    }
+  );
   return sort((a, b) => (a.ticker < b.ticker ? -1 : 1), balances);
 }
 

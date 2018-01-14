@@ -108,7 +108,7 @@ function parseBitcoinURL(url) {
     var queries = match[2].split('&');
     for (var i = 0; i < queries.length; i++) {
       var query = queries[i].split('=');
-      if (query.length == 2) {
+      if (query.length === 2) {
         parsed[query[0]] = decodeURIComponent(query[1].replace(/\+/g, '%20'));
       }
     }
