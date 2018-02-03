@@ -4,14 +4,15 @@ import * as btg from './currencies/btg';
 import * as btx from './currencies/btx';
 import * as sbtc from './currencies/sbtc';
 import * as b2x from './currencies/b2x';
+import * as ubtc from './currencies/ubtc';
 
 import Promise from 'bluebird';
 import axios from 'axios';
 import { sort } from 'ramda';
 
-export default async function(addresses) {
+export default async function (addresses) {
   const balances = await Promise.map(
-    [btc, bch, btg, btx, sbtc, b2x],
+    [btc, bch, btg, btx, sbtc, b2x, ubtc],
     async currency => {
       const [balances, { priceBtc, priceUsd }] = await Promise.all([
         getCurrencyBalances(addresses, currency),
