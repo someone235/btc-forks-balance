@@ -4,7 +4,7 @@ import getProxiedUrl from '../get-proxied-uri';
 
 export async function getBalance(addr) {
   const { data } = await getProxiedUrl(
-    `chainz.cryptoid.info/btx/api.dws?q=getbalance&a=${addr}`
+    `http://chainz.cryptoid.info/btx/api.dws?q=getbalance&a=${addr}`
   );
   return data * 1e8;
 }

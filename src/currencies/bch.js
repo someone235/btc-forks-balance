@@ -4,7 +4,7 @@ export async function getBalance(addr) {
   // const { data } = await axios.get(`https://blockdozer.com/insight-api/addr/${addr}/balance`);
   // return data;
   const { data: { data: [{ sum_value_unspent }] } } = await getProxiedUrl(
-    `api.blockchair.com/bitcoin-cash/dashboards/address/${addr}`
+    `http://api.blockchair.com/bitcoin-cash/dashboards/address/${addr}`
   );
   return Number(sum_value_unspent);
 }
